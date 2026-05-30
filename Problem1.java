@@ -1,19 +1,30 @@
 class Problem1 {
-    public int lengthOfLongestSubstring(String s) {
-        int slow = 0;
-        int n = s.length();
-        int max = 0;
-        HashMap<Character, Integer> map = new HashMap<>();
-
-        for (int i = 0; i < n; i++) {
-            char c = s.charAt(i);
-            if (map.containsKey(c)) {
-                slow = Math.max(slow, map.get(c) + 1);
-            }
-            map.put(c, i);
-            max = Math.max(max, i - slow + 1);
+    public String customSortString(String order, String s) {
+        
+        Map<Character, Integer> map = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i =0;i<s.length();i++) {
+            char ch = s.charAt(i);
+            map.put(s.charAt(i), map.getOrDefault(ch,0)+1);
         }
 
-        return max;
+        for(int i = 0 ; i<order.length();i++) {
+            char ch = order.charAt(i);
+            if(map.containsKey(ch)) {
+                int count = map.get(ch);
+                for(int j = 0; j<count;j++){
+                    sb.append(ch);
+                }
+                map.remove(ch);
+            }
+        }
+
+           for(char c : map.keySet()){
+            int cnt = map.get(c);
+            for(int k=0; k<cnt; k++){
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 }
